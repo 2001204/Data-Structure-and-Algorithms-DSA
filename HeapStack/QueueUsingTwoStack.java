@@ -7,7 +7,7 @@ import java.math.*;
 import java.util.regex.*;
 
 
-public class Main {
+public class QueueUsingTwoStack {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -36,11 +36,12 @@ public class Main {
                         while (!enqueueStack.isEmpty()) {
                             dequeueStack.push(enqueueStack.pop());
                         }
-                        System.out.println("Element Deleted successfully");
+                        
                     }
                     if (!dequeueStack.isEmpty()) {
                         dequeueStack.pop();
                     }
+                    System.out.println("Element Deleted successfully");
                     break;
 
                 case 3: // Print front element
