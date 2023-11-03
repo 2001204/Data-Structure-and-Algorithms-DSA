@@ -1,0 +1,911 @@
+Assignment on linked List
+PRN : 230940520019
+019_Dipak wani _JH
+=========================================================
+1. Implement a singly linked list in java
+------------------------------------------------------------
+
+public class SinglyLinkedList
+ {
+    public static void main(String[] args)
+ {
+        
+        Node node1 = new Node(10);
+        Node node2 = new Node(20);
+        Node node3 = new Node(30);
+
+        node1.next = node2;
+        node2.next = node3;
+
+        Node current = node1;
+
+        while (current != null)
+ 	{
+            System.out.println("Node Data: " + current.data);
+            current = current.next;
+        }
+    }
+}
+
+class Node
+{
+	int data;
+	Node next;
+	Node (int d)
+	{
+		data = d;
+		next = null;
+		
+	}
+
+}
+/*
+D:\ADS Workspace\LinkedList>java SinglyLinkedList.java
+Node Data: 10
+Node Data: 20
+Node Data: 30
+*/
+===================================================================
+
+2. Implement a Doubly linked list in java
+----------------------------------------------------------
+import java.util.*;
+
+class DeletionDoubleLinkList{
+	Node head;
+	static class Node{
+		int data;
+		Node next,prev;
+
+		Node(int d){
+			data = d;
+			next = null;
+			prev = null;
+		}
+	}
+
+	void insert(int new_data){
+		Node new_node = new Node(new_data);
+		new_node.next = head;
+		new_node.prev = null;
+		if(head!=null){
+			head.prev = new_node;
+		}
+		head = new_node;
+	}
+
+	void append(int new_data){
+		Node new_node = new Node(new_data);
+		Node last = head;
+		new_node.next = null;
+		if(head==null){
+			new_node.prev=null;
+			head=new_node;
+			return;
+		}
+		while(last.next!=null){
+			last = last.next;
+		}
+		last.next = new_node;
+		new_node.prev=last;
+
+
+	}
+
+	void display(Node n){
+		Node p = null;
+		System.out.println("Forward Direction : ");
+		while(n!= null){
+			System.out.print(n.data+"--> ");
+			p=n;
+			n=n.next;
+		}
+		System.out.println("\nBackward Direction : ");
+		while(p != null){
+			System.out.print("--> "+p.data);
+			p=p.prev;
+		}
+	}
+
+	void insertAfter(Node prev_node, int new_data){
+		if(prev_node == null){
+			System.out.println("Node cannot be exist.");
+			return;
+		}
+		Node new_node = new Node(new_data);
+		new_node.next = prev_node.next;
+		prev_node.next = new_node;
+		new_node.prev = prev_node;
+		if(new_node.next != null){
+			new_node.next.prev = new_node;
+		}
+	}
+
+	void deleteNode(Node n){
+		if(head == null || n == null ){
+			return;
+		}
+		if(head==n){
+			head=n.next;
+		}
+		if(n.next != null){
+			n.next.prev = n.prev;
+		}
+		if(n.prev.next != null){
+			n.prev.next=n.next;
+		}
+		return;
+
+	}
+
+	public static void main(String args[]){
+		DeletionDoubleLinkList n1 = new DeletionDoubleLinkList();
+		n1.insert(5);
+		n1.insert(10);
+		n1.insert(15);
+		n1.insert(25);
+		n1.append(35);
+		n1.insertAfter(n1.head.next, 25);
+		n1.display(n1.head);
+		System.out.println("\n-----------After Deleting Node-------------\n");
+		n1.deleteNode(n1.head.next);
+		n1.display(n1.head);
+	}
+}
+
+/*
+D:\ADS Workspace\LinkedList>java DeletionDoubleLinkList.java
+Forward Direction :
+25--> 15--> 25--> 10--> 5--> 35-->
+Backward Direction :
+--> 35--> 5--> 10--> 25--> 15--> 25
+-----------After Deleting Node-------------
+
+Forward Direction :
+25--> 25--> 10--> 5--> 35-->
+Backward Direction :
+--> 35--> 5--> 10--> 25--> 25
+*/
+====================================================================
+
+3. How to reverse a linked list in java
+--------------------------------------------------------------
+// Java program for reversing the linked list
+
+class ReverseLinkedList {
+
+	static Node head;
+
+	static class Node {
+
+		int data;
+		Node next;
+
+		Node(int d)
+		{
+			data = d;
+			next = null;
+		}
+	}
+
+
+	Node reverse(Node node)
+	{
+		Node prev = null;
+		Node temp = node;
+		Node next = null;
+		while (temp != null) {
+			next = temp.next;
+			temp.next = prev;
+			prev = temp;
+			temp = next;
+		}
+		node = prev;
+		return node;
+	}
+
+	// prints content of double linked list
+	void printList(Node node)
+	{
+		while (node != null) {
+			System.out.print(node.data + " ");
+			node = node.next;
+		}
+	}
+
+
+	public static void main(String[] args)
+	{
+		ReverseLinkedList list = new ReverseLinkedList();
+		list.head = new Node(85);
+		list.head.next = new Node(15);
+		list.head.next.next = new Node(4);
+		list.head.next.next.next = new Node(20);
+
+		System.out.println("Given linked list");
+		list.printList(head);
+		head = list.reverse(head);
+		System.out.println("");
+		System.out.println("Reversed linked list ");
+		list.printList(head);
+	}
+}
+/*
+
+D:\ADS Workspace\LinkedList>java ReverseLinkedList.java
+Given linked list
+85 15 4 20
+Reversed linked list
+20 4 15 85
+*/
+
+==============================================================
+4. How to reverse a linked list in pairs
+--------------------------------------------------------------------
+public class ReverseLinkedListPairs
+ {
+    public static void main(String[] args) 
+ {
+        LinkedListPairs list = new LinkedListPairs();
+        list.append(1);
+        list.append(2);
+        list.append(3);
+        list.append(4);
+        list.append(5);
+
+        System.out.print("Original List: ");
+        list.display();
+
+        list.reverseInPairs();
+
+        System.out.print("Reversed in Pairs: ");
+        list.display();
+    }
+}
+
+class Node {
+    int data;
+    Node next;
+
+    public Node(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+class LinkedListPairs {
+    Node head;
+
+    public LinkedListPairs() {
+        this.head = null;
+    }
+
+    public void append(int data) {
+        Node newNode = new Node(data);
+        if (head == null) {
+            head = newNode;
+        } else {
+            Node current = head;
+            while (current.next != null) {
+                current = current.next;
+            }
+            current.next = newNode;
+        }
+    }
+
+    public void display() {
+        Node current = head;
+        while (current != null) {
+            System.out.print(current.data + " ");
+            current = current.next;
+        }
+        System.out.println();
+    }
+
+    public void reverseInPairs() {
+        Node prev = null;
+        Node current = head;
+        Node nextNode = null;
+
+        int count = 0;
+        while (current != null && count < 2) {
+            nextNode = current.next;
+            current.next = prev;
+            prev = current;
+            current = nextNode;
+            count++;
+        }
+
+        head = prev;
+
+        if (nextNode != null) {
+            head.next = nextNode;
+        } else {
+            head.next = null;
+        }
+
+        if (nextNode != null) {
+            Node temp = head;
+            while (temp.next != null && temp.next.next != null) {
+                prev = temp.next;
+                current = temp.next.next;
+                nextNode = temp.next.next.next;
+
+                count = 0;
+                while (current != null && count < 2) {
+                    current.next = prev;
+                    prev = current;
+                    current = nextNode;
+                    nextNode = nextNode != null ? nextNode.next : null;
+                    count++;
+                }
+
+                temp.next = prev;
+                temp = current;
+                temp.next = nextNode;
+            }
+        }
+    }
+}
+
+===============================================================================
+5. How to find the middle element of a linked list in Java
+---------------------------------------------------------------------------------
+
+public class MiddleofLinkedList 
+{
+    public static void main(String[] args) 
+	{
+       	 	LinkedList list = new LinkedList();
+        	list.append(1);
+        	list.append(2);
+        	list.append(3);
+        	list.append(4);
+       	 	list.append(5);
+
+       	 	System.out.print("Original List: ");
+        	list.display();
+
+        	Node middle = list.findMiddle();
+        	if (middle != null) {
+            		System.out.println("Middle element: " + middle.data);
+        	} else 
+		{
+            		System.out.println("List is empty.");
+        	}
+    	}
+}
+
+
+class Node 
+{
+    int data;
+    Node next;
+
+    public Node(int data) 
+	{
+        	this.data = data;
+       	 	this.next = null;
+    	}
+}
+
+class LinkedList 
+{
+    Node head;
+
+    public LinkedList() {
+        this.head = null;
+    }
+
+    public void append(int data) .
+	{
+        	Node newNode = new Node(data);
+        	if (head == null)
+		{
+            		head = newNode;
+        	} else {
+            		Node current = head;
+            		while (current.next != null) {
+                		current = current.next;
+            			}
+            	current.next = newNode;
+       	 	}
+    }
+
+    public Node findMiddle() 
+	{
+        	if (head == null) {
+            		return null;
+        }
+
+        Node slow = head;
+        Node fast = head;
+
+        while (fast != null && fast.next != null)
+	 {
+            	slow = slow.next;
+            	fast = fast.next.next;
+        }
+
+        return slow;
+    }
+
+    public void display() 
+	{
+        	Node current = head;
+        	while (current != null) {
+            		System.out.print(current.data + " ");
+            		current = current.next;
+        }
+        System.out.println();
+    }
+}
+
+/*
+D:\ADS Workspace\LinkedList>java MiddleofLinkedList.java
+Original List: 1 2 3 4 5
+Middle element: 3
+*/
+===================================================================
+6. How to detect a loop in a linked list in Java
+--------------------------------------------------------------------------
+
+public class HasLoopLinkedList {
+    public static void main(String[] args) {
+        LinkedList list = new LinkedList();
+        list.append(1);
+        list.append(2);
+        list.append(3);
+        list.append(4);
+        list.append(5);
+
+        Node lastNode = list.head;
+        while (lastNode.next != null) {
+            lastNode = lastNode.next;
+        }
+        lastNode.next = list.head.next;
+
+        boolean hasLoop = list.hasLoop();
+        if (hasLoop) {
+            System.out.println("The linked list has a loop.");
+        } else {
+            System.out.println("The linked list does not have a loop.");
+        }
+    }
+}
+
+class Node {
+    int data;
+    Node next;
+
+    public Node(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+class LinkedList {
+    Node head;
+
+    public LinkedList() {
+        this.head = null;
+    }
+
+    public void append(int data) {
+        Node newNode = new Node(data);
+        if (head == null) {
+            head = newNode;
+        } else {
+            Node current = head;
+            while (current.next != null) {
+                current = current.next;
+            }
+            current.next = newNode;
+        }
+    }
+
+    public boolean hasLoop() {
+        Node slow = head;
+        Node fast = head;
+
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+
+            if (slow == fast) {
+                return true; // Loop detected
+            }
+        }
+
+        return false; // No loop found
+    }
+}
+/*
+D:\ADS Workspace\LinkedList>java HasLoopLinkedList.java
+The linked list has a loop.
+
+*/
+
+
+=====================================================================
+7. Find the start node of the loop in LinkedIn
+--------------------------------------------------------------------------
+public class StartNodeLinkedList {
+    public static void main(String[] args) {
+        LinkedList list = new LinkedList();
+        list.append(1);
+        list.append(2);
+        list.append(3);
+        list.append(4);
+        list.append(5);
+
+     
+        Node lastNode = list.head;
+        while (lastNode.next != null) {
+            lastNode = lastNode.next;
+        }
+        lastNode.next = list.head.next;
+
+        Node loopStart = list.detectAndFindLoopStart();
+        if (loopStart != null) {
+            System.out.println("The start node of the loop is at data: " + loopStart.data);
+        } else {
+            System.out.println("No loop found.");
+        }
+    }
+}
+
+
+class Node {
+    int data;
+    Node next;
+
+    public Node(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+class LinkedList {
+    Node head;
+
+    public LinkedList() {
+        this.head = null;
+    }
+
+    public void append(int data) {
+        Node newNode = new Node(data);
+        if (head == null) {
+            head = newNode;
+        } else {
+            Node current = head;
+            while (current.next != null) {
+                current = current.next;
+            }
+            current.next = newNode;
+        }
+    }
+
+    public Node detectAndFindLoopStart() {
+        Node slow = head;
+        Node fast = head;
+
+        // Detect the loop
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+
+            if (slow == fast) {
+                break; // Loop detected
+            }
+        }
+
+        // Check if there is no loop
+        if (fast == null || fast.next == null) {
+            return null; // No loop found
+        }
+
+        // Find the start of the loop
+        Node finder = head;
+        while (finder != slow) {
+            finder = finder.next;
+            slow = slow.next;
+        }
+
+        return finder;
+    }
+}
+
+/*
+D:\ADS Workspace\LinkedList>java StartNodeLinkedList.java
+The start node of the loop is at data: 2
+*/
+
+=====================================================================
+8. How to find the nth element from the end of the linked list
+--------------------------------------------------------------------------
+public class FindNthofLinkedList {
+    public static void main(String[] args) {
+        LinkedList list = new LinkedList();
+        list.append(1);
+        list.append(2);
+        list.append(3);
+        list.append(4);
+        list.append(5);
+
+        int n = 3; // Find the 3rd element from the end
+
+        int nthFromEnd = list.findNthFromEnd(n);
+        if (nthFromEnd != -1) {
+            System.out.println("The " + n + "th element from the end is: " + nthFromEnd);
+        } else {
+            System.out.println("Invalid input or n is greater than the number of nodes.");
+        }
+    }
+}
+
+class Node {
+    int data;
+    Node next;
+
+    public Node(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+class LinkedList {
+    Node head;
+
+    public LinkedList() {
+        this.head = null;
+    }
+
+    public void append(int data) {
+        Node newNode = new Node(data);
+        if (head == null) {
+            head = newNode;
+        } else {
+            Node current = head;
+            while (current.next != null) {
+                current = current.next;
+            }
+            current.next = newNode;
+        }
+    }
+
+    public int findNthFromEnd(int n) {
+        if (head == null || n <= 0) {
+            return -1; // Invalid input
+        }
+
+        Node first = head;
+        Node second = head;
+
+        // Move the first pointer n nodes ahead
+        for (int i = 0; i < n; i++) {
+            if (first == null) {
+                return -1; // n is greater than the number of nodes
+            }
+            first = first.next;
+        }
+
+        // Move both pointers until the first pointer reaches the end
+        while (first != null) {
+            first = first.next;
+            second = second.next;
+        }
+
+        return second.data;
+    }
+}
+
+/*
+D:\ADS Workspace\LinkedList>java FindNthofLinkedList.java
+The 3th element from the end is: 3
+*/
+
+
+=====================================================================
+9. How to check if the linked list is a palindrome in Java
+--------------------------------------------------------------------------
+
+public class PalindromeLinkedList
+ {
+    public static void main(String[] args)
+    {
+        LinkedList list = new LinkedList();
+        list.append('r');
+        list.append('a');
+        list.append('c');
+        list.append('e');
+        list.append('c');
+        list.append('a');
+        list.append('r');
+
+        boolean isPalindromic = list.isPalindrome();
+        if (isPalindromic) {
+            System.out.println("The linked list is a palindrome.");
+        } else {
+            System.out.println("The linked list is not a palindrome.");
+        }
+    }
+}
+class Node {
+    char data;
+    Node next;
+
+    public Node(char data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+class LinkedList {
+    Node head;
+
+    public LinkedList() {
+        this.head = null;
+    }
+
+    public void append(char data) {
+        Node newNode = new Node(data);
+        if (head == null) {
+            head = newNode;
+        } else {
+            Node current = head;
+            while (current.next != null) {
+                current = current.next;
+            }
+            current.next = newNode;
+        }
+    }
+
+    public boolean isPalindrome() {
+        if (head == null) {
+            return true; // An empty list is considered a palindrome.
+        }
+
+        Node slow = head;
+        Node fast = head;
+
+        // Find the middle of the linked list
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        Node prev = null;
+        Node current = slow;
+        Node nextNode;
+
+        while (current != null) {
+            nextNode = current.next;
+            current.next = prev;
+            prev = current;
+            current = nextNode;
+        }
+        Node firstHalf = head;
+        Node secondHalf = prev;
+
+        while (firstHalf != null && secondHalf != null) {
+            if (firstHalf.data != secondHalf.data) {
+                return false; // Not a palindrome
+            }
+            firstHalf = firstHalf.next;
+            secondHalf = secondHalf.next;
+        }
+
+        return true; // Palindrome
+    }
+}
+
+
+/*
+D:\ADS Workspace\LinkedList>java PalindromeLinkedList.java
+The linked list is a palindrome.
+*/
+
+=====================================================================
+10. Add two numbers represented by a linked list in Java
+--------------------------------------------------------------------------
+public class AddTwoNoLinkedList {
+    public static void main(String[] args) {
+        LinkedList num1 = new LinkedList();
+        LinkedList num2 = new LinkedList();
+
+        // Represent numbers in reverse order (1234 becomes 4->3->2->1)
+        num1.append(2);
+        num1.append(4);
+        num1.append(3);
+
+        num2.append(5);
+        num2.append(6);
+        num2.append(4);
+
+        System.out.print("Number 1: ");
+        num1.display();
+
+        System.out.print("Number 2: ");
+        num2.display();
+
+        LinkedList sum = LinkedList.add(num1, num2);
+
+        System.out.print("Sum: ");
+        sum.display();
+    }
+}
+
+
+class Node {
+    int data;
+    Node next;
+
+    public Node(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+class LinkedList {
+    Node head;
+
+    public LinkedList() {
+        this.head = null;
+    }
+
+    public void append(int data) {
+        Node newNode = new Node(data);
+        if (head == null) {
+            head = newNode;
+        } else {
+            Node current = head;
+            while (current.next != null) {
+                current = current.next;
+            }
+            current.next = newNode;
+        }
+    }
+
+    public void display() {
+        Node current = head;
+        while (current != null) {
+            System.out.print(current.data + " ");
+            current = current.next;
+        }
+        System.out.println();
+    }
+
+    public static LinkedList add(LinkedList l1, LinkedList l2) {
+        LinkedList result = new LinkedList();
+        Node p = l1.head;
+        Node q = l2.head;
+        int carry = 0;
+
+        while (p != null || q != null) {
+            int x = (p != null) ? p.data : 0;
+            int y = (q != null) ? q.data : 0;
+            int sum = x + y + carry;
+            carry = sum / 10;
+            result.append(sum % 10);
+
+            if (p != null) p = p.next;
+            if (q != null) q = q.next;
+        }
+
+        if (carry > 0) {
+            result.append(carry);
+        }
+
+        return result;
+    }
+}
+
+/*
+D:\ADS Workspace\LinkedList>java AddTwoNoLinkedList.java
+Number 1: 2 4 3
+Number 2: 5 6 4
+Sum: 7 0 8
+*/
+
+=====================================================================
+
