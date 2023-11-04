@@ -1,0 +1,605 @@
+Assignment on Tree
+PRN : 230940520019
+019_Dipak wani _JH
+=============================================================
+
+1. Implementation of Binary search tree in Java
+-----------------------------------------------------
+class BinarySearchTreeInsertion {
+    	Node root;
+
+    	static class Node {
+        	int data;
+        	Node left, right;
+
+       	 	Node(int d) {
+           	 data = d;
+           	 left = right = null;
+        	}
+    	}
+
+    	BinarySearchTreeInsertion() {
+        	root = null;
+   	 }
+
+   	 BinarySearchTreeInsertion(int d) {
+    	    	root = new Node(d);
+  	  }
+	Node insertdata(Node root, int key)
+	{
+ 		if ( root == null)
+		{
+			root = new Node( key );
+			return root;
+		}
+		if(key <= root.data)
+			root.left = insertdata( root.left, key );
+		else
+			root.right = insertdata(root.right, key);
+		return root;
+	}
+
+	void insert(int key)
+	{
+		root = insertdata(root, key);
+	}
+   	 static void printOrder(Node root) {
+      	  	if (root == null)
+            	return;
+
+        	printOrder(root.left);
+
+        	System.out.print(root.data + " ");
+
+        	printOrder(root.right);
+    }
+
+void printInorder(Node root)
+	{
+		if(root == null)
+ 		return;
+		printInorder(root.left);
+		System.out.print(root.data + " " );
+		printInorder(root.right);
+	}
+
+	void printPreorder(Node root)
+	{
+		if(root == null)
+ 		return;
+		System.out.print(root.data + " " );
+		printPreorder(root.left);
+		printPreorder(root.right);
+	}
+
+	void printPostorder(Node root)
+	{
+		if(root == null)
+ 		return;
+		printPostorder(root.left);
+		printPostorder(root.right);
+		System.out.print(root.data + " " );
+	}
+
+	void Inorder()
+	{
+		printInorder(root);
+	}
+
+	void Preorder()
+	{
+		printPreorder(root);
+	}
+
+	void Postorder()
+	{
+		printPostorder(root);
+	}
+
+    public static void main(String args[])
+ 	{
+        	BinarySearchTreeInsertion t1 = new BinarySearchTreeInsertion();
+
+        	t1.insert(35);
+		t1.insert(20);
+		t1.insert(10);
+		t1.insert(45);
+		t1.insert(39);
+		t1.insert(25);
+
+     		System.out.print("Binary search Tree Insertion :");
+        	//printOrder(t1.root);
+		System.out.println("\n-----------------------------");
+		System.out.print( "Preorder  : " );
+		t1.Preorder();
+		System.out.println("\n-----------------------------");
+		System.out.print( "Inorder  : " );
+		t1.Inorder();
+		System.out.println("\n-----------------------------");
+		System.out.print( "Postorder  : " );
+		t1.Postorder();
+		System.out.println("\n-----------------------------");
+    }
+}
+
+/*
+D:\ADS Workspace\Tree>java BinarySearchTree.java
+Binary search Tree Insertion:
+-----------------------------
+Preorder  : 35 20 10 25 45 39
+-----------------------------
+Inorder  : 10 20 25 35 39 45
+-----------------------------
+Postorder  : 10 25 20 39 45 35
+-----------------------------
+*/
+========================================================
+
+2. Delete node from binary search tree
+------------------------------------------------------------
+class BinarySearchTreeDeletion {
+    Node root;
+
+    static class Node {
+        int data;
+        Node left, right;
+
+        Node(int d) {
+            data = d;
+            left = right = null;
+        }
+    }
+
+    BinarySearchTreeDeletion() {
+        root = null;
+    }
+
+    BinarySearchTreeDeletion(int d) {
+        root = new Node(d);
+    }
+
+    Node insertData(Node root, int key) {
+        if (root == null) {
+            root = new Node(key);
+            return root;
+        }
+        if (key <= root.data)
+            root.left = insertData(root.left, key);
+        else
+            root.right = insertData(root.right, key);
+        return root;
+    }
+
+    void insert(int key) {
+        root = insertData(root, key);
+    }
+
+    void printInorder(Node root) {
+        if (root == null)
+            return;
+        printInorder(root.left);
+        System.out.print(root.data + " ");
+        printInorder(root.right);
+    }
+
+    void printPreorder(Node root) {
+        if (root == null)
+            return;
+        System.out.print(root.data + " ");
+        printPreorder(root.left);
+        printPreorder(root.right);
+    }
+
+    void printPostorder(Node root) {
+        if (root == null)
+            return;
+        printPostorder(root.left);
+        printPostorder(root.right);
+        System.out.print(root.data + " ");
+    }
+
+    Node deleteData(Node root, int key) {
+        if (root == null) {
+            return root;
+        }
+        if (key < root.data) {
+            root.left = deleteData(root.left, key);
+        } else if (key > root.data) {
+            root.right = deleteData(root.right, key);
+        } else {
+            if (root.left == null) {
+                return root.right;
+            } else if (root.right == null) {
+                return root.left;
+            }
+
+            root.data = minValue(root.right);
+            root.right = deleteData(root.right, root.data);
+        }
+        return root;
+    }
+
+    int minValue(Node root) {
+        int minValue = root.data;
+        while (root.left != null) {
+            minValue = root.left.data;
+            root = root.left;
+        }
+        return minValue;
+    }
+
+    void delete(int key) {
+        root = deleteData(root, key);
+    }
+
+    void inorder() {
+        printInorder(root);
+    }
+
+    void preorder() {
+        printPreorder(root);
+    }
+
+    void postorder() {
+        printPostorder(root);
+    }
+
+    public static void main(String[] args) {
+        BinarySearchTreeDeletion t1 = new BinarySearchTreeDeletion(2);
+
+        t1.insert(10);
+        t1.insert(8);
+        t1.insert(25);
+        t1.insert(22);
+        t1.insert(42);
+        t1.insert(9);
+        t1.insert(5);
+
+        System.out.println("Binary Search Tree Deletion:");
+        System.out.println("-----------------------------");
+        System.out.print("Preorder  : ");
+        t1.preorder();
+        System.out.println("\n-----------------------------");
+        System.out.print("Inorder   : ");
+        t1.inorder();
+        System.out.println("\n-----------------------------");
+        System.out.print("Postorder : ");
+        t1.postorder();
+        System.out.println("\n-----------------------------");
+
+        t1.delete(9);
+System.out.println("After deleting 9  : ");
+        t1.inorder();
+        System.out.println("\n-----------------------------");
+
+        t1.delete(5);
+System.out.println("After deleting 5  : ");
+        t1.inorder();
+        System.out.println("\n-----------------------------");
+
+        t1.delete(25);
+System.out.println("After deleting 25  : ");
+        t1.inorder();
+    }
+}
+
+==============================================================================
+
+3. Check if the tree is binary search tree or not
+public class IsBinarySearchTree {
+    public static void main(String[] args) {
+        BinaryTree tree = new BinaryTree();
+
+        // Construct a sample binary tree
+        tree.root = new Node(2);
+        tree.root.left = new Node(1);
+        tree.root.right = new Node(3);
+
+        boolean isBST = tree.isBST();
+
+        if (isBST) {
+            System.out.println("The tree is a Binary Search Tree.");
+        } else {
+            System.out.println("The tree is not a Binary Search Tree.");
+        }
+    }
+}
+
+class Node {
+    int data;
+    Node left;
+    Node right;
+
+    public Node(int data) {
+        this.data = data;
+        this.left = null;
+        this.right = null;
+    }
+}
+
+class BinaryTree {
+    Node root;
+
+    public BinaryTree() {
+        this.root = null;
+    }
+
+    // Helper function for checking if the tree is a BST
+    private boolean isBSTUtil(Node node, int min, int max) {
+        if (node == null) {
+            return true;
+        }
+
+        // Check the current node's value against the minimum and maximum values
+        if (node.data < min || node.data > max) {
+            return false;
+        }
+
+        // Recursively check the left and right subtrees
+        return isBSTUtil(node.left, min, node.data - 1) && isBSTUtil(node.right, node.data + 1, max);
+    }
+
+    public boolean isBST() {
+        return isBSTUtil(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
+    }
+}
+
+/*
+
+D:\ADS Workspace\Tree>java IsBinarySearchTree.java
+The tree is a Binary Search Tree.
+*/
+==========================================================
+4. Find minimum and maximum elements in the binary search tree
+public class MaxMinInBinarySearchTree {
+    public static void main(String[] args) {
+        BinarySearchTree tree = new BinarySearchTree();
+
+        tree.insert(50);
+        tree.insert(30);
+        tree.insert(70);
+        tree.insert(20);
+        tree.insert(40);
+        tree.insert(60);
+        tree.insert(80);
+
+        int minValue = tree.findMin();
+        int maxValue = tree.findMax();
+
+        System.out.println("Minimum value in the BST: " + minValue);
+        System.out.println("Maximum value in the BST: " + maxValue);
+    }
+}
+
+class Node {
+    int data;
+    Node left;
+    Node right;
+
+    public Node(int data) {
+        this.data = data;
+        this.left = null;
+        this.right = null;
+    }
+}
+
+class BinarySearchTree {
+    Node root;
+
+    public BinarySearchTree() {
+        this.root = null;
+    }
+
+    public void insert(int data) {
+        root = insertRec(root, data);
+    }
+
+    private Node insertRec(Node root, int data) {
+        if (root == null) {
+            root = new Node(data);
+            return root;
+        }
+
+        if (data < root.data) {
+            root.left = insertRec(root.left, data);
+        } else if (data > root.data) {
+            root.right = insertRec(root.right, data);
+        }
+
+        return root;
+    }
+
+    public int findMin() {
+        return findMinRec(root);
+    }
+
+    private int findMinRec(Node node) {
+        if (node == null) {
+            throw new IllegalArgumentException("The tree is empty.");
+        }
+
+        while (node.left != null) {
+            node = node.left;
+        }
+
+        return node.data;
+    }
+
+    public int findMax() {
+        return findMaxRec(root);
+    }
+
+    private int findMaxRec(Node node) {
+        if (node == null) {
+            throw new IllegalArgumentException("The tree is empty.");
+        }
+
+        while (node.right != null) {
+            node = node.right;
+        }
+
+        return node.data;
+    }
+}
+
+/*
+D:\ADS Workspace\Tree>java MaxMinInBinarySearchTree.java
+Minimum value in the BST: 20
+Maximum value in the BST: 80
+*/
+
+=============================================================================
+5. Convert sorted array to binary search tree
+------------------------------------------------------------------------
+public class SortedArrayToBinarySearchTree {
+    public TreeNode SortedArrayToBinarySearchTree(int[] nums) {
+        return SortedArrayToBinarySearchTree(nums, 0, nums.length - 1);
+    }
+
+    private TreeNode SortedArrayToBinarySearchTree(int[] nums, int left, int right) {
+        if (left > right) {
+            return null;
+        }
+
+        int mid = left + (right - left) / 2;
+        TreeNode root = new TreeNode(nums[mid]);
+
+        root.left = SortedArrayToBinarySearchTree(nums, left, mid - 1);
+        root.right = SortedArrayToBinarySearchTree(nums, mid + 1, right);
+
+        return root;
+    }
+
+    public void inOrderTraversal(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+
+        inOrderTraversal(root.left);
+        System.out.print(root.val + " ");
+        inOrderTraversal(root.right);
+    }
+
+    public static void main(String[] args) {
+        int[] sortedArray = {1, 2, 3, 4, 5, 6, 7};
+
+        SortedArrayToBinarySearchTree solution = new SortedArrayToBinarySearchTree();
+        TreeNode root = solution.SortedArrayToBinarySearchTree(sortedArray);
+
+        System.out.println("In-order traversal of the BST:");
+        solution.inOrderTraversal(root);
+    }
+}
+
+
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+
+    public TreeNode(int val) {
+        this.val = val;
+        this.left = null;
+        this.right = null;
+    }
+}
+/*
+D:\ADS Workspace\Tree>java SortedArrayToBinarySearchTree.java
+In-order traversal of the BST:
+1 2 3 4 5 6 7
+*/
+=================================================================================
+6. Convert sorted linked list to binary search tree
+-------------------------------------------------------------------------------
+public class SortedListToBinarySearchTree
+ {
+    private ListNode findMiddle(ListNode head) {
+        ListNode slow = head;
+        ListNode fast = head;
+        ListNode prev = null;
+
+        while (fast != null && fast.next != null) {
+            prev = slow;
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        if (prev != null) {
+            prev.next = null;
+        }
+
+        return slow;
+    }
+
+    public TreeNode SortedListToBinarySearchTree(ListNode head) {
+        if (head == null) {
+            return null;
+        }
+
+        ListNode mid = findMiddle(head);
+        TreeNode root = new TreeNode(mid.val);
+
+        if (head == mid) {
+            return root;
+        }
+
+        root.left = SortedListToBinarySearchTree(head);
+        root.right = SortedListToBinarySearchTree(mid.next);
+
+        return root;
+    }
+
+    public void inOrderTraversal(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+
+        inOrderTraversal(root.left);
+        System.out.print(root.val + " ");
+        inOrderTraversal(root.right);
+    }
+
+    public static void main(String[] args) {
+        ListNode head = new ListNode(1);
+        head.next = new ListNode(2);
+        head.next.next = new ListNode(3);
+        head.next.next.next = new ListNode(4);
+        head.next.next.next.next = new ListNode(5);
+
+        SortedListToBinarySearchTree solution = new SortedListToBinarySearchTree();
+        TreeNode root = solution.SortedListToBinarySearchTree(head);
+
+        System.out.println("In-order traversal of the BST:");
+        solution.inOrderTraversal(root);
+    }
+}
+
+
+class ListNode {
+    int val;
+    ListNode next;
+
+    public ListNode(int val) {
+        this.val = val;
+        this.next = null;
+    }
+}
+
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+
+    public TreeNode(int val) {
+        this.val = val;
+        this.left = null;
+        this.right = null;
+    }
+}
+
+/*
+D:\ADS Workspace\Tree>java SortedListToBinarySearchTree.java
+In-order traversal of the BST:
+1 2 3 4 5
+*/
+=====================================================================
